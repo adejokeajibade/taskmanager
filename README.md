@@ -15,8 +15,12 @@ An Architecture Diagram is also included
 
 5. Run `composer install laravel`
 
-6. Create a database named `task-manager` in your local DB client (phpmyadmin/MySQL Workbench etc.)
+6. CD into your project folder
 
-7. Run `php artisan migrate --seed`
+7. Run `composer update`
 
-8. Test your project on your localhost.
+8. Create a database named `task-manager` in your local DB client (phpmyadmin/MySQL Workbench etc.)
+
+9. Run `php artisan migrate --seed`
+
+10. Test your project on your localhost.
