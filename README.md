@@ -2,7 +2,7 @@
 
 ## Description
 A task manager application built with Laravel API - Live Project can also be tested on http://taskmanager.rccg.org/
-
+An Architecture Diagram is also included
 ## Begin
 
 1. Clone the repository
