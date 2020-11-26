@@ -1,0 +1,76 @@
+version: '3.6'
+services:
+
+  redprint_app:
+    container_name: redprint_app
+    build:
+      context: ./
+      dockerfile: Docker/App
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=redprint_database"
+    restart: on-failure
+    networks:
+      - redprint_network
+    depends_on:
+      - "redprint_database"
+      - "redprint_redis"
+      - "redprint_web"
+
+  redprint_web:
+    container_name: redprint_web
+    build:
+      context: ./
+      dockerfile: Docker/Web
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    environment:
+      - VIRTUAL_HOST=redprint.local
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - redprint_network
+    depends_on:
+      - "redprint_database"
+      - "redprint_redis"
+
+  redprint_database:
+    container_name: redprint_db
+    image: mysql:5.7
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=redprint"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD=root123"
+      - "MYSQL_ROOT_PASSWORD=root123"
+    ports:
+      - "33006:3306"
+    restart: always
+    networks:
+      - redprint_network
+
+  redprint_redis:
+    container_name: redprint_redis
+    build:
+      context: ./
+      dockerfile: Docker/Redis
+    ports:
+      - 16379:6379
+    restart: on-failure
+    networks:
+      - redprint_network
+
+volumes:
+  dbdata:
+
+networks:
+  redprint_network:
+    driver: bridge
