@@ -2,7 +2,6 @@
 
 ## Description
 A task manager application built with Laravel API
-An Architecture Diagram is also included
 ## Begin
 
 1. Clone the repository
